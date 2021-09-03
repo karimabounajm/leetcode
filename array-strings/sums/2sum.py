@@ -13,11 +13,11 @@ class Solution:
         return [-1, -1]
     def twoSumHash(self, nums: List[int], target: int) -> List[int]:
         hash_table = {}
-        for i in range(len(nums)):
-            if target - nums[i] in hash_table:
-                return [i, hash_table[target - nums[i]]]
+        for i, num in enumerate(nums):
+            if target - num in hash_table:
+                return [i, hash_table[target - num]]
             else:
-                hash_table[nums[i]] = i
+                hash_table[num] = i
 
 test = [-1,0,1,0]
 sol = Solution()

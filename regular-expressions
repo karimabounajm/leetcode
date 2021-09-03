@@ -1,0 +1,130 @@
+
+
+
+
+flags:
+global: allows match anywhere in the string, multiple matches; if off matches only first one
+case insensitive: makes the upper/lowercase status of values 
+
+quantifiers like +*?:
++: matches 1 or more of the proceding token, meaning
+	/re+/ does all re--, e being mandatory
+*: matches 0 or more, making it optional, meaning
+	/re*/ does all r---, the - beings e's and it being optional
+?: makes the immediately previous character/group optional
+.: matches everything except a newline
+
+searching for special characters:
+using a backslash \ before a special character enables the regular expression to search
+for it. normally, characters like . and * have quantifier meaniong, meaning
+	/\*/g searches for all asterisks 
+
+\w is a word character, meaning alphanumeric and underscores
+\s is for searching for whitespaces
+
+\W and \S are opposites for what they normally do, with \W being any non-word characters
+and \S being any non-whitespaces
+
+capturing words of a given length, with the below expression getting any words of length 5
+or greater. can also make it in a range, with {lower, upper} being the proper syntax
+/\w{5,}/g
+
+matching words by starting characters, find words that start with characters fc:
+/[fc]at/g
+
+checking words for ranges of characters, checking if word starts with any lowercase letter, 
+meaning a-z, and then ends with at. this means cat, fat, mat would be selected.
+/[a-z]at/g
+
+checking for words that contain a number of characters from a given set, for example 5 of 
+any of the characters t, e, and r (not 5 of one, but 5 altogether) is done by
+/(t|e|r){5,}/g
+
+all words of length greater than 5:
+/([A-Z])\w+/g
+
+^ symbol is for matching the beginning of the chunk that regex is looking at, with that chunk 
+being either the entire text as one string, which is what happens if the multiflag line is off,
+or the first character of each line, which will happen if the multiline flag is turned on 
+this checks if the first word in the full text is the (upper of lowercase first letter):
+/^[Tt]he/g
+making it /gm will check the start of every line
+
+$ symbol is for matching at the end of a statement, with the same restrictions as ^ in that the 
+text can be viewed as one very simple or multiline
+this checks if the line/full text ends in a period
+/\.$/gm
+making it /gm will check the end of every line
+
+searching for number of something is done with {n}, with the following being searching for 5 numbers
+print(re.search(r"\d{3}","hello1234"))
+
+
+looking behind essentialyl means identifying the text, usually word, after something defined
+without selecting that text, so for example gets the character after the text [Tt]he without 
+selecting the in the text  
+/(?<=[tT]he)./g 
+
+negative look behind returns all the values that do not have the defined word preceding them, 
+so for example the following selects everything except the character that follow any [Tt]he 
+in the text
+/(?<![tT]he)./g 
+
+
+looking ahead can be done the same as doing looking behind except without the < sign, meaning 
+that the following selects any character that is followed by at
+/.(?=at)./g 
+
+
+
+example:
+checking for all values by line that start with D, have a character, and then end with sk
+note the following only checks at the start of every line
+/^(D\w)(.?)(?:sk)/gm
+this will check every word in the whole text, which will take more time but might be necessary
+/(D\w)(.?)(?:sk)?$/gm
+
+
+example is verifying phone numbers, which illustrates use of | and other chaining selection 
+techniques
+
+/\d{3}[ -]?\d{3}[ -]?\d{4}/gm
+to go through this step by step, \d is to make sure that the following is numerical, and {3} means
+that it requires 3 numbers. [ -] means that the following should be either a space or a dash, which 
+are inside the square brackets, and [ -]? means it is optional, because of the question mark. the 
+rest is just repetition
+
+
+
+regular expression in python
+
+import re
+  
+print(re.search(r"9+","289908"))
+print(re.search(r"\d{3}","hello1234"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
