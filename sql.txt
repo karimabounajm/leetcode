@@ -1,0 +1,136 @@
+
+---- Note, these two do the same thing, first is faster
+-- Querying data from multiple tables
+SELECT p.FirstName, p.LastName, a.City, a.State 
+FROM Person AS p LEFT JOIN Address AS a 
+on p.PersonId = a.PersonId;
+
+-- Joining tables and then querying them for data
+SELECT FirstName, LastName, City, State
+FROM Person LEFT JOIN Address
+on Person.PersonId = Address.PersonId;
+
+---- Using Conditionals
+-- Selecting all rows that have a column value less than certain int
+SELECT Employee.name, Bonus.bonus
+FROM Employee LEFT JOIN Bonus 
+on Employee.empid = Bonus.empid
+WHERE bonus < 1000 OR bonus IS NULL;
+
+-- Using variable syntax
+SELECT e.name, b.bonus
+FROM Employee AS e LEFT JOIN Bonus as b
+on e.empid = b.empid
+WHERE bonus < 1000 OR bonus IS NULL;
+
+---- Performing mathematical operations on selected subgroups
+-- Finding the average experience in years by project
+SELECT a.project_id, ROUND(AVG(b.experience_years), 2) as average_years
+FROM Project as a 
+LEFT JOIN Employee as b
+USING(employee_id)
+GROUP BY a.project_id;
+-- Essentially, in the above program AVG is performed on what can be thought
+-- of as a 2d array, with the outer index being for projects and the inner
+-- array being the years of its members. AVG finds the everage of every 
+-- project, which are organized by project ID. This matches it to the other
+-- column of the returned query, which is the project IDs. 
+
+-- sorting projects by order of how many employees they have, which in this 
+-- case is calculated by the number of employee IDs it has
+SELECT project_id 
+FROM Project
+GROUP BY project_id
+HAVING COUNT(employee_id) = 
+(
+	SELECT max(count) FROM 
+	(
+		SELECT count(employee_id) AS 'count' 
+		FROM Project GROUP BY project_id
+	) 
+	AS t1
+);
+
+-- finding most experienced employees by their ID
+SELECT project_id, employee_id
+FROM 
+(
+    SELECT p.*,
+    -- dense_rank allows for multiple people to be given the
+    -- same rank, in case peopel tie in number of hours
+    dense_rank() over
+    (
+    	partition by p.project_id 
+    	ORDER BY e.experience_years DESC
+    ) rank
+    FROM Project AS p 
+    LEFT JOIN Employee AS e
+    on p.employee_id  = e.employee_i
+) rank_table 
+-- ranks allowed and displayed
+WHERE rank=1
+    
+
+---- USING vs ON
+-- Both accomplish the same thing if the names of the columns merged are the same
+SELECT a.project_id, ROUND(AVG(b.experience_years), 2) as average_years
+FROM Project as a 
+LEFT JOIN Employee as b
+-- both of the following work
+USING(employee_id)
+on e.employee_id = b.employee_id
+-- separator
+GROUP BY a.project_id;
+
+
+---- Performing operations on data
+SELECT user_id, user_name,
+-- checks if the user credit exists, if not then return 0
+IFNULL
+(
+	-- summing all of the user transactions, having negatives
+	-- for transactions user paid for and positive for paid to
+	SUM(
+		CASE WHEN user.user_id=transaction.paid_by 
+		THEN -amount 
+		ELSE amount END
+	),
+	0
+) + user.credit AS credit,
+CASE WHEN IFNULL
+(
+	-- summing all transactions again and comparing it to credit,
+	-- to see if the credit has become negative, and thus breached
+	SUM(
+		CASE WHEN user.user_id=transaction.paid_by 
+		THEN -amount 
+		ELSE amount END
+	),
+	0
+) >= -user.credit THEN "No" ELSE "Yes" END AS credit_limit_breached
+-- above line compares transaction sum with the user credit and returning
+-- values to columns called credit_limit_breached that corresponds to it
+FROM Users AS user
+LEFT JOIN Transactions AS transaction
+ON user.user_id=transaction.paid_by OR user.user_id=transaction.paid_to
+GROUP BY user.user_id;
+
+
+
+select project_id
+from project 
+group by project_id
+having count(employee_id) = 
+     (select max(cnt) 
+      from (select project_id, count(distinct employee_id) as cnt
+            from project
+            group by project_id) as t1)
+;
+
+
+
+
+
+
+
+
