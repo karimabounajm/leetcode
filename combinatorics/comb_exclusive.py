@@ -24,7 +24,6 @@ class Solution:
         
 nums = [4, 5, 6, 3, 8]
 tar = 11
-# nums = [0, 4, 2, 1, 5]
 sol = Solution()
 print(sol.combinationSum(nums, tar))
 print(nums)
