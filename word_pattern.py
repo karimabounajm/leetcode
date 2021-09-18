@@ -1,6 +1,6 @@
 class Solution:
     def wordPatternMatch(self, pattern: str, s: str) -> bool:
-        def helper(pattern, string, forward={}, backward={}):
+        def helper(pattern, string, char_map={}, substr_map={}):
             # if all the chars in the pattern have been mapped but result
             # has all chars used and string still having unmapped parts
             if not pattern and string:
@@ -20,27 +20,27 @@ class Solution:
                 # character, as well as backtracing by continuing the process
                 # of assigning substrings to characters until one in which the
                 # passing base case is found
-                if p not in forward and s not in backward:
-                    forward[p] = s
-                    backward[s] = p
+                if p not in char_map and s not in substr_map:
+                    char_map[p] = s
+                    substr_map[s] = p
                     # using recursion to backtrace, continuing the current 
                     # configuration of characters to sub strings to see if 
                     # a solution from this pattern will result in all the 
                     # characters being mapped to substrings and the original
                     # string having all its parts mapped bijectively 
-                    if helper(pattern[1:], string[length:], forward, backward):
-                        return forward, backward, True
+                    if helper(pattern[1:], string[length:], char_map, substr_map):
+                        return char_map, substr_map, True
                     # removes the assignment of character to substring and 
                     # vice versa, in case the backtracing in this branch failed
-                    del forward[p]
-                    del backward[s]
+                    del char_map[p]
+                    del substr_map[s]
                 # this is in case the character has already been mapped to a 
                 # substring and the substring is correctly mapped, in which 
                 # case continue with the algorithm starting with a new character
                 # in the pattern, success in mapping another character so far
-                elif p in forward and forward[p] == s :
-                    if helper(pattern[1:], string[length:], forward, backward):
-                        return forward, backward, True
+                elif p in char_map and char_map[p] == s :
+                    if helper(pattern[1:], string[length:], char_map, substr_map):
+                        return char_map, substr_map, True
                 # the loop continues, to accommodate for the cases in which the 
                 # character is already mapped to a substring however the current
                 # in the loop is not matching the one the character is mapepd to.
@@ -48,7 +48,7 @@ class Solution:
                 # mapping of the character with a proper substring
             return False
         
-        return helper(pattern, s)
+        return bool(helper(pattern, s))
 
 chars = "aba"
 word = "reddbluered"
