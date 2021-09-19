@@ -45,7 +45,7 @@ class Solution:
             higher -= 1
     return answer
 
-test = [-1,0,1,0]
+test = [1, 1, 1, 1]
 sol = Solution()
 print(sol.threeSumSorted(test))
 print(sol.threeSumHash(test))
