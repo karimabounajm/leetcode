@@ -9,7 +9,7 @@ class Solution:
             return None
 
         # self.res = [max average, tree node of the max average]
-        self.res = [float('-inf'), root)]
+        self.res = [float('-inf'), root]
         self.dfs(root)
 
         return self.res[1]

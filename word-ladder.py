@@ -1,75 +1,6 @@
 from typing import List
-import collections
-
-
-''' inefficient solution '''
-# class Solution:
-#     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-#         # check if the endWord exists in the wordList
-#         if endWord not in wordList:
-#             return 0
-#         def getCombs(word):
-#             values = []
-#             for i in range(len(word)):
-#                 for j in range(26):
-#                     values.append(word[:i] + chr(ord('a') + j) + word[i+1:])
-#             return values
-#         # starting the queue 
-#         queue = []
-#         queue.append(beginWord)
-#         # setting the length, or the number of transformations
-#         length = 0
-#         while(len(queue)):
-#             # incremementing the number of transformations needed
-#             length += 1
-#             interval = len(queue)
-#             # checks every value in the queue
-#             for i in range(interval):
-#                 word = queue.pop(0)
-#                 if word == endWord:
-#                     return length
-#                 word_combs = getCombs(word)
-#                 for comb in word_combs:
-#                     if comb in wordList:
-#                         queue.append(comb)
-#                         wordList.remove(comb)
-#         return 0
-        
-#         # creating a dictionary to store the edges
-#         # for word in wordList:
-#         #     for inner_word in wordList:
-#         #         if inner_word != word:
-#         #             print('potato')
-#         # print(beginWord, endWord, wordList)
-        
 from collections import defaultdict
-
-# class Solution(object):
-#   def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-#     if endWord not in wordList:
-#       return 0
-#     masks = defaultdict(list)
-#     for word in wordList:
-#       for i in range(len(word)):
-#         masks[word[:i] + '*' + word[i+1:]].append(word)
-
-#     steps = 1
-#     queue = [beginWord]
-
-#     while queue:
-#       next_queue = []
-#       while queue:
-#         cur_word = queue.pop()
-#         if cur_word == endWord:
-#           return steps
-#         for i, ch in enumerate(cur_word):
-#           mask = cur_word[:i] + '*' + cur_word[i+1:]
-#           next_queue.extend(masks[mask])
-#           del masks[mask]
-#       steps += 1
-#       queue = next_queue
-
-#     return 0
+import collections
 
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
@@ -178,3 +109,71 @@ print(sol.ladderLength(word1, word2, words))
 #                         queue.append((word, level + 1))
 #                 all_combo_dict[intermediate_word] = []
 #         return 0
+
+
+''' inefficient solution '''
+# class Solution:
+#     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+#         # check if the endWord exists in the wordList
+#         if endWord not in wordList:
+#             return 0
+#         def getCombs(word):
+#             values = []
+#             for i in range(len(word)):
+#                 for j in range(26):
+#                     values.append(word[:i] + chr(ord('a') + j) + word[i+1:])
+#             return values
+#         # starting the queue 
+#         queue = []
+#         queue.append(beginWord)
+#         # setting the length, or the number of transformations
+#         length = 0
+#         while(len(queue)):
+#             # incremementing the number of transformations needed
+#             length += 1
+#             interval = len(queue)
+#             # checks every value in the queue
+#             for i in range(interval):
+#                 word = queue.pop(0)
+#                 if word == endWord:
+#                     return length
+#                 word_combs = getCombs(word)
+#                 for comb in word_combs:
+#                     if comb in wordList:
+#                         queue.append(comb)
+#                         wordList.remove(comb)
+#         return 0
+        
+#         # creating a dictionary to store the edges
+#         # for word in wordList:
+#         #     for inner_word in wordList:
+#         #         if inner_word != word:
+#         #             print('potato')
+#         # print(beginWord, endWord, wordList)
+        
+# class Solution(object):
+#   def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+#     if endWord not in wordList:
+#       return 0
+#     masks = defaultdict(list)
+#     for word in wordList:
+#       for i in range(len(word)):
+#         masks[word[:i] + '*' + word[i+1:]].append(word)
+
+#     steps = 1
+#     queue = [beginWord]
+
+#     while queue:
+#       next_queue = []
+#       while queue:
+#         cur_word = queue.pop()
+#         if cur_word == endWord:
+#           return steps
+#         for i, ch in enumerate(cur_word):
+#           mask = cur_word[:i] + '*' + cur_word[i+1:]
+#           next_queue.extend(masks[mask])
+#           del masks[mask]
+#       steps += 1
+#       queue = next_queue
+
+#     return 0

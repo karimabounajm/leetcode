@@ -29,8 +29,6 @@ class Solution:
             # is closer to the target than the previous best difference, update
             # it and then return the best difference, as all further iterations
             # will only result in greater values, and thus worse differences
-            # if target - (nums[i] + nums[lower] + nums[lower+1]) > diff and \
-            # nums[i] + nums[lower] + nums[lower+1] > target:
             min_sum = num_i + nums[i + 1] + nums[i + 2]
             if min_sum > target and abs(target - min_sum) < abs(target - ans):
                 return min_sum
