@@ -7,9 +7,6 @@ class Node:
         self.next = next
         self.random = random
 
-
-
-
 class Solution:
     def copyRandomList(self, head: 'Node') -> 'Node':
       # default dict is used because it auotmatically generates
@@ -41,6 +38,9 @@ class Solution:
       # setting up the next and random pointers of nodes in new linked
       # list, which can now be done as the nodes are already created
       while n:
+        # note, get is used because the the key is a node of the original
+        # list, so getting n.next with n being of the original list gets
+        # the copy of the next value within the dictionary
         dic[n].next = dic.get(n.next)
         dic[n].random = dic.get(n.random)
         n = n.next
