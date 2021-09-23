@@ -1,3 +1,5 @@
+
+import collections
 """
 # Definition for a Node.
 """
@@ -18,7 +20,13 @@ class Solution:
       dic[None] = None
       cur_point = head
       while cur_point:
+          # creating a new deep copied node using default dict and its
+          # constructor for setting up new nodes, and then immediately
+          # setting the deep copied node's value to that of the original
           dic[cur_point].val = cur_point.val
+          # using the current node to extract its deep copied list
+          # version, and setting that deep copied node's next version
+          # to a deep copied version of the current node's next version
           dic[cur_point].next = dic[cur_point.next]
           dic[cur_point].random = dic[cur_point.random]
           cur_point = cur_point.next
@@ -33,7 +41,7 @@ class Solution:
       # creating all of the nodes of the new linked list, with their 
       # values initialized however their pointers left void
       while m:
-        dic[m] = RandomListNode(m.label)
+        dic[m] = Node(m.label)
         m = m.next
       # setting up the next and random pointers of nodes in new linked
       # list, which can now be done as the nodes are already created
