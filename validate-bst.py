@@ -1,9 +1,9 @@
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 class Solution:
     def RecursiveisValidBST(self, root: TreeNode) -> bool:
         def recursive_search(node: TreeNode, maxi, mini):
@@ -29,3 +29,21 @@ class Solution:
             stack.append((root.right, val, upper))
             stack.append((root.left, lower, val))
         return True
+    def pathSum(self, root: TreeNode, sum: int) -> int:
+        def preorder(node: TreeNode, curr_sum) -> None:
+            nonlocal count
+            if not node:
+                return 
+            curr_sum += node.val
+            if curr_sum == k:
+                count += 1
+            count += h[curr_sum - k]
+            hdic[curr_sum] += 1
+            preorder(node.right, curr_sum)
+            preorder(node.left, curr_sum)
+            hdic[curr_sum] -= 1
+            
+        count, k = 0, sum
+        hdic = defaultdict(int)
+        preorder(root, 0)
+        return count
