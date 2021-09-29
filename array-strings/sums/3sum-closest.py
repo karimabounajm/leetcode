@@ -5,13 +5,18 @@ class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
         # sorting the array to optimize searching
         nums.sort()
-        ans, length = nums[0] + nums[1] + nums[2], len(nums)
-        # checking base case for input, in case of easy return
-        if length == 3 or ans >= target:
+        # setting the arbitrarly close answer to the target as the
+        # sum of the first three elements
+        ans = nums[0] + nums[1] + nums[2]
+        # checking base case for input, in case of easy return, with 
+        # the second conditional checking if the sum of the 3 least 
+        # elements is greater than the target, meaning that all further
+        # combinations will be further away from the target
+        if len(nums) == 3 or ans >= target:
             return ans
         # outer loop, with i holding the index to the leftmost element
         # in consideration
-        for i in range(length - 2):
+        for i in range(len(nums) - 2):
             num_i = nums[i]
             if i > 0 and nums[i - 1] == num_i:
                 continue
@@ -25,18 +30,17 @@ class Solution:
                     ans = max_sum
                 continue
             # checking base case, which is if the minimum sum of the current
-            # iteration is greater than th etarget, in which case if that sum
+            # iteration is greater than the target, in which case if that sum
             # is closer to the target than the previous best difference, update
             # it and then return the best difference, as all further iterations
             # will only result in greater values, and thus worse differences
             min_sum = num_i + nums[i + 1] + nums[i + 2]
-            if min_sum > target and abs(target - min_sum) < abs(target - ans):
-                return min_sum
-                # continue
+            if min_sum > target:
+                return min_sum if abs(target - min_sum) < abs(target - ans) else ans
             # initializing the two pointers, with left to the immediate right
             # of i and right being at the end of the array
             left = i + 1
-            right = length - 1
+            right = len(nums) - 1
             # standard loop looking through the array looking for the best sum, 
             while left < right:
                 # assigning sum to variable, avoid calculating multiple times
@@ -53,7 +57,7 @@ class Solution:
                     left += 1
                     # avoiding repeating the same element by checking if the 
                     # previous element is the same, doen in right decrement too
-                    while left < length - 1 and nums[left] == nums[left - 1]:
+                    while left < len(nums) - 1 and nums[left] == nums[left - 1]:
                         left += 1
                 else:
                     right -= 1

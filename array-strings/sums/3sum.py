@@ -23,7 +23,7 @@ class Solution:
             higher -= 1
     return answer
   def threeSumHash(self, nums: List[int]) -> List[List[int]]:
-    nums = sorted(nums)
+    nums.sort()
     length = len(nums)
     answer = []
     for i in range(length):
