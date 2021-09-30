@@ -1,3 +1,6 @@
+from collections import List, deque
+from functools import lru_cache
+
 class Solution:
     def wordBreakIterative(self, s: str, wordDict: List[str]) -> bool:
         # creating an array of values that indicate if the current 

@@ -21,6 +21,8 @@ class Solution:
             # should be added, set to False if the requirement of 
             # a character is not met by a word
             add = True
+            # using the items method, however using keys and have
+            # hashing return the val is also an option, save memory
             for j, val in dic.items():
                 if i.count(j) < val:
                     add = False

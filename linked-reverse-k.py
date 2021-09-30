@@ -4,12 +4,12 @@ class ListNode:
         self.val = val
         self.next = next
         
-# common algorithm/loop for reversing a linked list in place,
+'''# common algorithm/loop for reversing a linked list in place,
 # with a for loop reversing n nodes if it is done in 
 next_node = ptr.next
 ptr.next = new_head
 new_head = ptr
-ptr = next_node
+ptr = next_node'''
 
 class Solution:
     # helper function for reversing a subset of the linked list, with

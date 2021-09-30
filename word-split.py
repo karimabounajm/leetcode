@@ -1,3 +1,5 @@
+from collections import List, deque
+
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
         n = len(s)

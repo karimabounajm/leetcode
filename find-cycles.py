@@ -47,3 +47,30 @@ class Solution(object):
         # returning False, as no cycle was found
         return False
 
+
+
+from collections import defaultdict
+from typing import List
+class Solution(object):
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        courseDict = defaultdict(list)
+        for relation in prerequisites:
+            courseDict[relation[1]].append(relation[0])
+        checked, path = [False] * numCourses, [False] * numCourses
+        for currCourse in range(numCourses):
+            if self.isCyclic(currCourse, courseDict, checked, path):
+                return False
+        return True
+    def isCyclic(self, currCourse, courseDict, checked, path):
+        if checked[currCourse]:
+            return False
+        if path[currCourse]:
+            return True
+        path[currCourse] = True
+        for child in courseDict[currCourse]:
+            if self.isCyclic(child, courseDict, checked, path):
+                return True
+        path[currCourse] = False
+        checked[currCourse] = True
+        return False
+
