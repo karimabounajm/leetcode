@@ -7,7 +7,6 @@ class Solution:
             if current == 0:
                 ans.append(array)
             for i in range(index, len(candidates)):
-                # print(candidate, i)
                 if candidates[i] > current:
                     break
                 elif candidates[i] == current:

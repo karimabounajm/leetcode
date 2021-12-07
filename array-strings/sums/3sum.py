@@ -28,14 +28,13 @@ class Solution:
 
     def threeSumHash(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
-        length = len(nums)
         answer = []
-        for i in range(length):
+        for i in range(len(nums)):
             if nums[i] > 0:
                 break
             if i == 0 or nums[i - 1] != nums[i]:
                 lower = i + 1
-                higher = length - 1
+                higher = len(nums) - 1
                 while higher > lower:
                     temp = nums[i] + nums[lower] + nums[higher]
                     if temp == 0:

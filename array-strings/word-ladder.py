@@ -2,13 +2,7 @@ import collections
 from collections import defaultdict
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):
-        """
-        :type beginWord: str
-        :type endWord: str
-        :type wordList: List[str]
-        :rtype: int
-        """
-
+        # checking base cases
         if endWord not in wordList or not endWord or not beginWord or not wordList:
             return 0
 
@@ -20,7 +14,6 @@ class Solution(object):
         all_combo_dict = defaultdict(list)
         for word in wordList:
             for i in range(L):
-                # Key is the generic word
                 # Value is a list of words which have the same intermediate generic word.
                 all_combo_dict[word[:i] + "*" + word[i+1:]].append(word)
 

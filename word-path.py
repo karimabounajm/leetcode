@@ -1,3 +1,7 @@
+
+import collections
+from collections import List
+
 class Solution:
     # BFS
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
